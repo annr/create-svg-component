@@ -1,5 +1,5 @@
 {
-  "name": "component-svg",
+  "name": "create-svg-component",
   "version": "1.0.0",
   "description": "Generate React components from SVGs",
   "main": "index.js",
@@ -8,20 +8,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/annr/component-svg.git"
+    "url": "git+https://github.com/annr/create-svg-component.git"
   },
   "author": "anno.robson@gmail.com",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/annr/component-svg/issues"
+    "url": "https://github.com/annr/create-svg-component/issues"
   },
   "bin": {
-    "svg-to-component": "./index.js"
+    "create-svg-component": "./index.js"
   },
-  "homepage": "https://github.com/annr/component-svg#readme",
+  "homepage": "https://github.com/annr/create-svg-component#readme",
   "dependencies": {
     "htmltojsx": "^0.3.0",
-    "jsdom-no-contextify": "^3.1.0",
-    "yargs": "^8.0.2"
+    "jsdom-no-contextify": "^3.1.0"
   }
 }

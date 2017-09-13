@@ -1,11 +1,10 @@
 'use strict'
 
 module.exports.helptext = `
-This tool takes a svg file and outputs a full formated stateless functional 
-React component written in TypeScript.
+Generates React components as TSX files from SVGs. (currently does one at a time)
 
-Usage: svg-to-ts-react svg ComponentName
+Usage: create-svg-component sample/arrow-down ArrowDown sample/
 
   **Created by Ann Robson
-  repo: https://github.com/annr/svg-to-ts-react-cli
+  repo: https://github.com/annr/create-svg-component
 `;
