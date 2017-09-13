@@ -6,6 +6,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [
+    "react",
+    "svg",
+    "component",
+    "typescript"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/annr/create-svg-component.git"
@@ -16,7 +22,7 @@
     "url": "https://github.com/annr/create-svg-component/issues"
   },
   "bin": {
-    "create-svg-component": "./index.js"
+    "svgcomp": "./index.js"
   },
   "homepage": "https://github.com/annr/create-svg-component#readme",
   "dependencies": {
