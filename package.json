@@ -27,6 +27,7 @@
   "homepage": "https://github.com/annr/create-svg-component#readme",
   "dependencies": {
     "htmltojsx": "^0.3.0",
-    "jsdom-no-contextify": "^3.1.0"
+    "jsdom-no-contextify": "^3.1.0",
+    "yargs": "^8.0.2"
   }
 }

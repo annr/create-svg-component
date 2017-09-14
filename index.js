@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const HTMLtoJSX = require('htmltojsx');
 const jsdom = require('jsdom-no-contextify');
+const yargs = require('yargs');
 
 // custom files
 const content = require('./strings/en-us');
@@ -11,26 +12,41 @@ const getComponentName = require('./src/getComponentName');
 const formatSVG = require('./src/formatSVG');
 const generateComponentFile = require('./src/generateComponentFile');
 
-// test values.
-// const inputName = 'skype';
-// const componentName = 'Skype';
-// const outputPath = 'components';
+const args = yargs
+.option('dir', { default: '' })
+.option('output', { alias: 'o' })
+.option('help', { default: false })
+.argv;
 
-let inputName = process.argv[1];
-let newComponentName = process.argv[2];
-let outputPath = process.argv[3];
+let dirPath = args.dir;
+let outputPath = args.output;
+let svg;
+let inputName;
+let newComponentName;
 
-if(process.argv[4]) {
-  // shift them. This is terrible and will be removed.
-  inputName = process.argv[2];
-  newComponentName = process.argv[3];
-  outputPath = process.argv[4];
+if (args.help) {
+  console.log(content.helptext);
+  process.exit(1);
 }
 
-// Bootstrap base variables
+if(dirPath && !outputPath) {
+  outputPath = dirPath;
+}
+
+if(!dirPath) {
+  inputName = args._[0];
+  newComponentName = args._[1];
+
+  // if input name does not include .svg, add it.
+  if(inputName.indexOf('.svg') === -1) {
+    inputName = inputName + '.svg';
+  }
+  svg = `./${inputName}`;
+}
+
 const converter = new HTMLtoJSX({ createClass: false });
-const svg = `./${inputName}.svg`; // to do: fix path, remove svg
-let fileCount = 0;
+
+//let fileCount = 0;
 
 const writeFile = (processedSVG, fileName) => {
   let file;
@@ -49,14 +65,7 @@ const writeFile = (processedSVG, fileName) => {
     }
     filesWritten++;
 
-    console.log('File written to -> ' + file);
-
-    if (filesWritten === fileCount) {
-      console.log(`${filesWritten} components created. That must be some kind of record`);
-      console.log();
-      console.log(content.processCompleteText);
-      console.log();
-    }
+    console.log(`Component written to ${file}`);
   });
 };
 
@@ -73,14 +82,19 @@ const runUtil = (fileToRead, fileToWrite) => {
 
       const body = window.document.getElementsByTagName('body')[0];
 
-      // use viewbox for height and width if attributes not set
+      // we require viewBox
+      if(!body.firstChild.getAttribute('viewBox')) {
+        console.error(`File does not have a viewBox attribute. Skipping...`);
+        return;
+      }
+ 
       if(body.firstChild.hasAttribute('viewBox')) {
         const [minX, minY, width, height] = body.firstChild.getAttribute('viewBox').split(/[,\s]+/);
         if(!width || !height) {
           throw new Error('Could not get SVG height and width from viewBox')
         }
       }
-
+      // use viewBox for height and width if attributes not set
       if(!body.firstChild.hasAttribute('width')) {
         body.firstChild.setAttribute('width', width);
       }
@@ -108,14 +122,15 @@ const runUtil = (fileToRead, fileToWrite) => {
       // Wrap it up in a React component
       output = generateComponentFile(output, fileToWrite);
 
+      // fileCount++;
       writeFile(output, fileToWrite);
     });
 
   });
 };
 
-const runUtilForAllInDir = () => {
-  fs.readdir(process.cwd(), (err, files) => {
+const runUtilForAllInDir = (dir) => {
+  fs.readdir(process.cwd() + '/' + dir, (err, files) => {
     if (err) {
       return console.log(err);
     }
@@ -127,24 +142,19 @@ const runUtilForAllInDir = () => {
       if (extention === '.svg') {
         // variable instantiated up top
         const componentName = getComponentName(file, fileName);
-        runUtil(fileName, componentName);
-        fileCount++;
+        runUtil(dir + '/' + fileName, componentName);
       }
     });
   });
 };
 
-// Exit out early arguments
-if (process.argv[0] === '--help') {
-  console.log(content.helptext);
-  process.exit(1);
-}
-
-// Main entry point
-// if (firstArg === 'dir') {
-//   runUtilForAllInDir();
-// } else {
-//   fileCount++;
+if (dirPath !== '') {
+   runUtilForAllInDir(dirPath);
+} else {
+  // fileCount++;
+  if(!newComponentName) {
+    newComponentName = getComponentName(svg, path.basename(svg));
+  }
   runUtil(svg, newComponentName);
-// }
+}
 
