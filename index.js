@@ -84,21 +84,21 @@ const runUtil = (fileToRead, fileToWrite) => {
 
       // we require viewBox
       if(!body.firstChild.getAttribute('viewBox')) {
-        console.error(`File does not have a viewBox attribute. Skipping...`);
+        console.error(`${fileToRead} does not have a viewBox attribute. Skipping...`);
         return;
       }
  
       if(body.firstChild.hasAttribute('viewBox')) {
-        const [minX, minY, width, height] = body.firstChild.getAttribute('viewBox').split(/[,\s]+/);
+        const [, , width, height] = body.firstChild.getAttribute('viewBox').split(/[,\s]+/);
         if(!width || !height) {
-          throw new Error('Could not get SVG height and width from viewBox')
+          throw new Error('Could not get width and height from viewBox attribute')
         }
       }
       // use viewBox for height and width if attributes not set
-      if(!body.firstChild.hasAttribute('width')) {
+      if(!body.firstChild.hasAttribute('width') && width) {
         body.firstChild.setAttribute('width', width);
       }
-      if(!body.firstChild.hasAttribute('height')) {
+      if(!body.firstChild.hasAttribute('height') && height) {
         body.firstChild.setAttribute('height', height);
       }
 
