@@ -1,4 +1,4 @@
-'use strict'
+
 
 const path = require('path');
 
@@ -7,8 +7,8 @@ const path = require('path');
  * @param  string s The input string
  * @return string The output string
  */
-function snakeToCamel(s){
-  return s.replace(/(\-\w)/g, function(m){return m[1].toUpperCase();});
+function snakeToCamel(s) {
+  return s.replace(/(\-\w)/g, m => m[1].toUpperCase());
 }
 
 /**
@@ -20,7 +20,7 @@ function snakeToCamel(s){
 module.exports = function createComponentName(file, fileName) {
   let componentNamePrep;
 
-  if (fileName.indexOf('-') !== - 1) {
+  if (fileName.indexOf('-') !== -1) {
     componentNamePrep = snakeToCamel(path.basename(file, '.svg'));
   } else {
     componentNamePrep = path.basename(file, '.svg');
