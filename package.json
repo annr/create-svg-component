@@ -1,33 +1,40 @@
 {
-  "name": "create-svg-component",
-  "version": "1.1.2",
-  "description": "Generate React components from SVGs",
+  "name": "svgcomp",
+  "version": "1.0.1",
+  "description": "Creates React components from SVGs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node tests/svgComp_spec.js",
+    "lint": "eslint index.js src/*.js tests/*.js"
   },
-  "keywords": [
-    "react",
-    "svg",
-    "component",
-    "typescript"
-  ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/annr/create-svg-component.git"
+    "url": "git+https://github.com/Microsoft/svgcomp.git"
   },
-  "author": "anno.robson@gmail.com",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/annr/create-svg-component/issues"
-  },
+  "keywords": [
+    "React",
+    "TypeScript",
+    "SVG"
+  ],
   "bin": {
     "svgcomp": "./index.js"
   },
-  "homepage": "https://github.com/annr/create-svg-component#readme",
+  "author": "Ann Robson <anno.robson@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Microsoft/svgcomp/issues"
+  },
+  "homepage": "https://github.com/Microsoft/svgcomp#readme",
   "dependencies": {
-    "htmltojsx": "^0.3.0",
-    "jsdom-no-contextify": "^3.1.0",
-    "yargs": "^8.0.2"
+    "htmltojsx": "=0.3.0",
+    "jsdom": "=11.2.0",
+    "yargs": "=9.0.1"
+  },
+  "devDependencies": {
+    "eslint": "=4.7.2",
+    "eslint-config-airbnb": "=15.1.0",
+    "eslint-plugin-import": "=2.7.0",
+    "eslint-plugin-jsx-a11y": "=5.1.1",
+    "eslint-plugin-react": "=7.4.0"
   }
 }

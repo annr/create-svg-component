@@ -1,0 +1,8 @@
+{
+    "extends": "airbnb",
+    "rules": {
+      "no-console": "off",
+      "jsx-a11y/href-no-hash": "off",
+      "consistent-return": "off"
+    }
+}
